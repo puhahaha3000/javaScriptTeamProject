@@ -84,6 +84,7 @@
 		height: 30px;
 		color: #FFFFFF;
 		background-color: #428BCA;
+		border-style: none;
 		border-color: #357EBD;
 	}
 </style>
@@ -93,7 +94,7 @@
 	idCount = 0;
 	idList = new Array();
 	pwdList = new Array();
-	emailObj = new Array();
+	emailList = new Array();
 	
 	window.onload = function() {
 		idObj = document.getElementsByName('id')[0];
@@ -102,12 +103,14 @@
 		pwdRepeatObj = document.getElementsByName('pwdRepeat')[0];
 		schoolOrOfficeObj = document.getElementsByName('schoolOrOffice')[0];
 		emailObj = document.getElementsByName('email')[0];
+		submitObj = document.getElementById('submitBtn');
 		
 		idObj.addEventListener('change', idChkFnc);
 		messageObj.addEventListener('change', messageChkFnc);
 		pwdObj.addEventListener('change', pwdChkFnc);
-		pwdRepeatObj.addEventListener('change', pwdChkRepeatFnc);
+		pwdRepeatObj.addEventListener('change', pwdRepeatChkFnc);
 		emailObj.addEventListener('change', emailChkFnc);
+		submitObj.addEventListener('click', finalChkFnc);
 	}
 
 	function idChkFnc(){
@@ -119,7 +122,7 @@
 			resultStr = '아이디를 입력해 주세요';
 		} else if(idStr.length < 3) {
 			resultStr = '아이디는 3자 이상입니다';
-		} else if(idStr == 100){
+		} else if(idUniqueChkFnc(idStr)){
 			resultStr = '이미 등록되어 있는 아이디 입니다';
 		} else{
 			idChk = true;
@@ -131,6 +134,15 @@
 		borderColorFnc(idObj, idChk);
 		
 		return idChk;
+	}
+	
+	function idUniqueChkFnc(str){
+		for (var i = 0; i < idCount; i++) {
+			if(idList[i] == str){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	function messageChkFnc(){
@@ -171,7 +183,7 @@
 		return pwdChk;
 	}
 
-	function pwdChkRepeatFnc(){
+	function pwdRepeatChkFnc(){
 		var pwdStr = pwdObj.value;
 		var pwdRepeatStr = pwdRepeatObj.value;
 		var pwdRepeatChk = false;
@@ -200,7 +212,7 @@
 			resultStr = '이메일을 입력해 주세요';
 		} else if(emailStr.indexOf('@') == -1){
 			resultStr = '올바른 이메일 주소를 입력해 주세요';
-		} else if(emailList == ""){
+		} else if(emailUniqueChkFnc(emailStr)){
 			resultStr = '이미 등록되어 있는 이메일입니다'
 		} else{
 			emailChk = true;
@@ -214,6 +226,14 @@
 		return emailChk;
 	}
 	
+	function emailUniqueChkFnc(str){
+		for (var i = 0; i < idCount; i++) {
+			if(emailList[i] == str){
+				return true;
+			}
+		}
+		return false;
+	}
 	function borderColorFnc(obj, chk){
 		if(chk){
 			obj.style.borderColor = "#DDDDDD";
@@ -222,6 +242,20 @@
 		}
 	}
 	
+	function finalChkFnc(){
+		var idChk = idChkFnc();
+		var messageChk = messageChkFnc();
+		var pwdChk = pwdChkFnc();
+		var pwdRepeatChk = pwdRepeatChkFnc();
+		var emailChk = emailChkFnc();
+		
+		if(idChk && messageChk && pwdChk && pwdRepeatChk && emailChk){
+			idList[idCount] = idObj.value;
+			pwdList[idCount] = pwdObj.value;
+			emailList[idCount++] = emailObj.value;
+			alert('가입완료');
+		}
+	}
 </script>
 
 </head>
@@ -245,7 +279,7 @@
 	</div>
 	
 	<div id="midDiv">
-		<form action="">
+		<form action="./login.jsp">
 			<div id="formContainer">
 				<div id="formHeader">
 					<h2 style="font-size: 18px">회원가입</h2>
@@ -290,7 +324,7 @@
 				</div>
 				<hr style="margin: 30px 0px">
 				<div class="formRow" style="text-align: right">
-					<input id="submitBtn" type="submit" value="가입하기">
+					<input id="submitBtn" type="button" value="가입하기">
 				</div>
 			</div>
 		</form>
