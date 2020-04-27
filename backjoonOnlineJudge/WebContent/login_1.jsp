@@ -92,18 +92,18 @@
 	
 	window.onload = function() {
 		
-		var formTag = document.getElementsByTagName('form')[0];
+		var tag = document.getElementsByTagName('input')[3];
 		
-		formTag.addEventListener('click', checkFnc, false);
+		tag.addEventListener('click', checkFnc, false);
 	}
 	
 	function checkFnc() {
 		
 		var inputTag = document.getElementsByTagName('input');
 		
-		var idValue = inputTag[1].value;
+		var idValue = inputTag[0].value;
 		
-		var pwdValue = inputTag[2].value;
+		var pwdValue = inputTag[1].value;
 		
 		if (idValue.length >= 3 && pwdValue.length >= 6) {
 			location = "./index.jsp";
