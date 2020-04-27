@@ -57,22 +57,22 @@
 		text-align: center;
 	}
 	
-	#formRow{
+	.formRow{
 		padding: 0px 15px;
 	}
 	
-	#formRow p{
+	.formRow p{
 		font-weight: bold;
 	}
 	
-	#inputLong{
+	.inputLong{
 		width: 436px;
 		height: 20px;
 		padding: 6px 12px;
 		border: 1px solid #DDDDDD;
 	}
 	
-	#inputShort{
+	.inputShort{
 		width: 195px;
 		height: 20px;
 		padding: 6px 12px;
@@ -89,7 +89,139 @@
 </style>
 	
 <script type="text/javascript">
+
+	idCount = 0;
+	idList = new Array();
+	pwdList = new Array();
+	emailObj = new Array();
+	
+	window.onload = function() {
+		idObj = document.getElementsByName('id')[0];
+		messageObj = document.getElementsByName('message')[0];
+		pwdObj = document.getElementsByName('pwd')[0];
+		pwdRepeatObj = document.getElementsByName('pwdRepeat')[0];
+		schoolOrOfficeObj = document.getElementsByName('schoolOrOffice')[0];
+		emailObj = document.getElementsByName('email')[0];
 		
+		idObj.addEventListener('change', idChkFnc);
+		messageObj.addEventListener('change', messageChkFnc);
+		pwdObj.addEventListener('change', pwdChkFnc);
+		pwdRepeatObj.addEventListener('change', pwdChkRepeatFnc);
+		emailObj.addEventListener('change', emailChkFnc);
+	}
+
+	function idChkFnc(){
+		var idStr = idObj.value;
+		var idChk = false;
+		var resultStr = '';
+		
+		if (idStr.length == 0){
+			resultStr = '아이디를 입력해 주세요';
+		} else if(idStr.length < 3) {
+			resultStr = '아이디는 3자 이상입니다';
+		} else if(idStr == 100){
+			resultStr = '이미 등록되어 있는 아이디 입니다';
+		} else{
+			idChk = true;
+		}
+		
+		var errObj = document.getElementById('idErr');
+		errObj.innerHTML = resultStr;
+		errObj.style.color = 'red';
+		borderColorFnc(idObj, idChk);
+		
+		return idChk;
+	}
+	
+	function messageChkFnc(){
+		var messageStr = messageObj.value;
+		var messageChk = false;
+		var resultStr = '';
+		
+		if(messageStr.length == 0){
+			resultStr = '상태 메시지를 입력해주세요';
+		} else{
+			messageChk = true;
+		}
+		
+		var errObj = document.getElementById('messageErr');
+		errObj.innerHTML = resultStr;
+		errObj.style.color = 'red';
+		borderColorFnc(messageObj, messageChk);
+		
+		return messageChk;
+	}
+	
+	function pwdChkFnc(){
+		var pwdStr = pwdObj.value;
+		var pwdChk = false;
+		var resultStr = '';
+		
+		if(pwdStr.length < 6){
+			resultStr = '비밀번호는 6자 이상입니다';
+		} else{
+			pwdChk = true;
+		}
+		
+		var errObj = document.getElementById('pwdErr');
+		errObj.innerHTML = resultStr;
+		errObj.style.color = 'red';
+		borderColorFnc(pwdObj, pwdChk);
+		
+		return pwdChk;
+	}
+
+	function pwdChkRepeatFnc(){
+		var pwdStr = pwdObj.value;
+		var pwdRepeatStr = pwdRepeatObj.value;
+		var pwdRepeatChk = false;
+		var resultStr = '';
+		
+		if(pwdRepeatStr == pwdStr){
+			pwdRepeatChk = true;
+		} else{
+			resultStr = '비밀번호가 일치하지 않습니다';
+		}
+		
+		var errObj = document.getElementById('pwdRepeatErr');
+		errObj.innerHTML = resultStr;
+		errObj.style.color = 'red';
+		borderColorFnc(pwdRepeatObj, pwdRepeatChk);
+		
+		return pwdRepeatChk;
+	}
+	
+	function emailChkFnc(){
+		var emailStr = emailObj.value;
+		var emailChk = false;
+		var resultStr = '';
+		
+		if (emailStr.length == 0){
+			resultStr = '이메일을 입력해 주세요';
+		} else if(emailStr.indexOf('@') == -1){
+			resultStr = '올바른 이메일 주소를 입력해 주세요';
+		} else if(emailList == ""){
+			resultStr = '이미 등록되어 있는 이메일입니다'
+		} else{
+			emailChk = true;
+		}
+		
+		var errObj = document.getElementById('emailErr');
+		errObj.innerHTML = resultStr;
+		errObj.style.color = 'red';
+		borderColorFnc(emailObj, emailChk);
+		
+		return emailChk;
+	}
+	
+	function borderColorFnc(obj, chk){
+		if(chk){
+			obj.style.borderColor = "#DDDDDD";
+		} else{
+			obj.style.borderColor = "red";
+		}
+	}
+	
 </script>
 
 </head>
@@ -124,35 +256,40 @@
 					<p>가입 후 아이디는 변경할 수 없습니다.</p>
 				</div>
 				<hr>
-				<div id="formRow">
+				<div class="formRow">
 					<p>아이디</p>
-					<input id="inputLong" type="text">
+					<input class="inputLong" type="text" name="id">
+					<p id="idErr"></p>
 				</div>
-				<div id="formRow">
+				<div class="formRow">
 					<p>상태메시지(다른 사람에게 보이고 싶은 한마디)</p>
-					<input id="inputLong" type="text">
+					<input class="inputLong" type="text" name="message">
+					<p id="messageErr"></p>
 				</div>
-				<div id="formRow">
+				<div class="formRow">
 					<div style="float: left;">
 						<p>비밀번호</p>
-						<input id="inputShort" type="text">
+						<input class="inputShort" type="password" name="pwd">
+						<p id="pwdErr"></p>
 					</div>
 					<div style="float: left; margin-left: 20px;">
 						<p>비밀번호(확인)</p>
-						<input id="inputShort" type="text">
+						<input class="inputShort" type="password" name="pwdRepeat">
+						<p id="pwdRepeatErr"></p>
 					</div>
 					<div style="clear: left;"></div>
 				</div>
-				<div id="formRow">
+				<div class="formRow">
 					<p>학교/회사 또는 소속</p>
-					<input id="inputLong" type="text">
+					<input class="inputLong" type="text" name="schoolOrOffice">
 				</div>
-				<div id="formRow">
+				<div class="formRow">
 					<p>이메일 주소</p>
-					<input id="inputLong" type="email">
+					<input class="inputLong" type="email" name="email">
+					<p id="emailErr"></p>
 				</div>
 				<hr style="margin: 30px 0px">
-				<div id="formRow" style="text-align: right">
+				<div class="formRow" style="text-align: right">
 					<input id="submitBtn" type="submit" value="가입하기">
 				</div>
 			</div>

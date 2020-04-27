@@ -35,8 +35,7 @@
 		background-color: #FFFFFF;
 		border-style: none;
 	}
-/* 	공통부분 끝 */
-
+	/* 	공통부분 끝 */
 </style>
 	
 <script type="text/javascript">
