@@ -4,9 +4,13 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>BackJoon Online Judge</title>
 
 <style type="text/css">
+	*{
+		font-style: dotumche;
+		font-size: 14px;
+	}
 	
 	#topNavDiv{
 		width: 1024px;
@@ -19,9 +23,16 @@
 		height: 60px;
 	}
 	
+	#midDiv{
+		width: 1024px;
+		margin: auto;
+	}
+	
 	.navBtn{
-		width: 100px;
-		height: 60px;
+		width: 80px;
+		height: 40px;
+		background-color: #FFFFFF;
+		border-style: none;
 	}
 </style>
 	
@@ -33,13 +44,16 @@
 
 <body>
 
-	<div id=topNavDiv>
+	<div id="topNavDiv">
 <!-- 		원래크기 524*120 -->
-		<a href="./input.jsp">
-			<img id="navLogo" src="./image/logo.png">
+		<a href="./index.jsp" style="text-decoration: none">
+			<img id="navLogo" src="./image/logo.png" style="vertical-align: bottom;">
 		</a>
 		<input class="navBtn" type="button" value="게시판">
 	</div>
 	
+	<div id="midDiv">
+		내용
+	</div>
 </body>
 </html>
