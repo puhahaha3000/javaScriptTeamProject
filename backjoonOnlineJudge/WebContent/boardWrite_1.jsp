@@ -93,7 +93,7 @@
 							Writer
 						</td>
 						<td>
-							<input id='writerText' type='text' value=''>
+							<input type='text' value='' name="writer">
 						</td>
 					</tr>
 					<tr>
@@ -101,7 +101,7 @@
 							Subject
 						</td>
 						<td>
-							<input id='subjectText' type='text' size='53' value=''>
+							<input type='text' size='53' value='' name="subject">
 						</td>
 					</tr>
 					<tr>
@@ -109,7 +109,7 @@
 							Email
 						</td>
 						<td>
-							<input id='emailText' type="email" size='53' value=''>
+							<input type="email" size='53' name='email'>
 						</td>
 					</tr>
 					<tr>
@@ -117,7 +117,7 @@
 							Content
 						</td>
 						<td>
-							<textarea id='contentText' rows="20" cols="45"></textarea>
+							<textarea rows="20" cols="45" name='content'></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -125,7 +125,7 @@
 							Password
 						</td>
 						<td>
-							<input id='pwdText' type='password' value=''>
+							<input type='password' value=''>
 						</td>
 					</tr>
 					<tr>
