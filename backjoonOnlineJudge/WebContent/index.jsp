@@ -7,6 +7,7 @@
 	<title>BackJoon Online Judge</title>
 
 <style type="text/css">
+/* 	공통부분 시작 */
 	*{
 		font-style: dotumche;
 		font-size: 14px;
@@ -34,6 +35,8 @@
 		background-color: #FFFFFF;
 		border-style: none;
 	}
+/* 	공통부분 끝 */
+
 </style>
 	
 <script type="text/javascript">
