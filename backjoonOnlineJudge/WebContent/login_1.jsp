@@ -86,6 +86,75 @@
 		background-color: #428BCA;
 		border-color: #357EBD;
 	}
+	
+	#loginStartDiv{
+		width: 400px;
+		height: 460px;
+		margin: auto;
+		border: 1px solid black;
+	}
+	
+	#secondDiv{
+		width: 360px;
+		height: 340px;
+		margin: 0 auto;
+		margin-top: 18px;
+	}
+	
+	#lineDiv{
+		width: 360px;
+		height: 50px;
+		margin: auto;
+		border-bottom: 1px solid gray;
+	}
+	
+	#lineSecondDiv{
+		width: 360px;
+		height: 50px;
+		margin: auto;
+		margin-top : 60px;
+		border-bottom: 1px solid gray;
+	}
+	
+	#idEmailDiv{
+		height: 30px;
+		margin-top: 30px;
+	}
+	
+	#idEmailSecondDiv{
+		height: 30px;
+		margin-top: 20px;
+	}
+
+	.image{
+		width: 30px;
+		height: 30px;
+		border: 1px solid #BDBDBD;
+		float: left;
+	}
+	
+	.textInput{
+		width: 324px;
+		height: 26px;
+		float: left;
+	}
+	
+	#loginBtn{
+		width: 70px;
+		height: 30px;
+		margin-top: 3px;
+		background-color: #6799FF;
+		color : white;
+		text-align: center;
+		float: right;
+	}
+	
+	#lastDiv{
+		margin-top: 50px;
+		text-align: left;
+	}
+	
+	
 </style>
 	
 <script type="text/javascript">
@@ -101,21 +170,20 @@
 		
 		var inputTag = document.getElementsByTagName('input');
 		
-		var idValue = inputTag[0].value;
+		var idValue = inputTag[1].value;
 		
-		var pwdValue = inputTag[1].value;
+		var pwdValue = inputTag[2].value;
 		
 		if (idValue.length >= 3 && pwdValue.length >= 6) {
-			location = "./index.jsp";
+			location = "./board_1.jsp";
 		}else{
 			var pTag = document.getElementById('mistake');
 			pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
 			pTag.setAttribute('style', 'color : red');
+			
+			inputTag[1].value = '';
+			inputTag[2].value = '';
 		}
-		
-		
-		
-		
 	}
 	
 </script>
@@ -143,48 +211,42 @@
 		
 		<div id="formHeader">
 		
-			<div style="border: 1px solid black; width: 400px; height: 460px; margin: auto;">
+			<div id="loginStartDiv">
 	
-				<div style="border: 1px solid white; width: 360px; height: 340px;
-					margin: 0 auto; margin-top: 18px;" >
-					<div style="width: 360px; height: 50px; border-bottom : 1px solid gray;
-						margin: auto;" >
+				<div id="secondDiv">
+					<div id="lineDiv" >
 						<div style="font-size: 24px;">
 							로그인
 						</div>
 					</div>
 					
-					<div style="margin-top: 30px; height: 30px;">
+					<div id="idEmailDiv">
 						<div>
-							<img style="width: 30px; height: 30px; border: 1px solid #BDBDBD;
-							float: left;" alt="" src="./image/login_1이미지.JPG">
+							<img class="image" alt="" src="./image/login_1이미지.JPG">
 						</div>
 						
-						<input style="width: 324px; height: 26px; float: left;" type="text" 
+						<input class="textInput" type="text" 
 							placeholder="아이디 / 이메일">
 					</div>
 					
-					<div style="margin-top: 20px; height: 30px;">
+					<div id="idEmailSecondDiv">
 						<div>
-							<img style="width: 30px; height: 30px; border: 1px solid #BDBDBD;
-							 float: left;" alt="" src="./image/login_1이미지2.JPG">
+							<img class="image" alt="" src="./image/login_1이미지2.JPG">
 						</div>
 						
-						<input style="width: 324px; height: 26px; float: left;" type="password" 
+						<input class="textInput" type="password" 
 							placeholder="비밀번호">
 					</div>
 					
 					<div style="margin-top: 30px;">
 						
-							<input style="margin-top: 3px; float: right; background-color: #6799FF;
-								color: white; width: 70px; height: 30px; text-align: center;" type="text" value="로그인">
+							<input id="loginBtn" type="text" value="로그인">
 					</div>
 					
-					<div style="width: 360px; height: 50px; border-bottom : 1px solid gray;
-						margin: auto; margin-top: 60px;">
+					<div id="lineSecondDiv">
 					</div>
 					
-					<div style="font-size: 12px; margin-top: 50px; text-align: left;">
+					<div id="lastDiv">
 						<div>
 							<p id="mistake"></p>
 							<p>회원 가입은, <a href="./signUp_1.jsp">여기</a>에서 할 수 있습니다.</p> 

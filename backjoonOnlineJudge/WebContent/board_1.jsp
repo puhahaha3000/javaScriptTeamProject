@@ -178,7 +178,11 @@
 	<div id="midDiv">
 		<div id='headerDiv'>
 			List Sample
+			<a href="./login_1.jsp">
+				<input style="float: right" type="button" value="로그아웃">
+			</a>
 		</div>
+		
 		<hr>
 		<div id='firstLine'>
 			<select id='selectBtn' name='findValue'>
