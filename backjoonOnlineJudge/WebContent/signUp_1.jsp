@@ -30,14 +30,6 @@
 		padding: 30px;
 	}
 	
-	.navBtn{
-		width: 80px;
-		height: 40px;
-		background-color: #FFFFFF;
-		border-style: none;
-	}
-/* 	공통부분 끝 */
-	
 	#midTitleBar{
 		height: 60px;
 		border-style: solid none solid none;
@@ -45,6 +37,15 @@
 		border-color: #CCCCCC;
 		background-color: #EEEEEE;
 	}
+
+	.navBtn{
+		width: 80px;
+		height: 40px;
+		background-color: #FFFFFF;
+		border-style: none;
+	}
+
+/* 	공통부분 끝 */
 	
 	#formContainer{
 		width: 493px;
@@ -91,10 +92,10 @@
 	
 <script type="text/javascript">
 
-	idCount = 0;
-	idList = new Array();
-	pwdList = new Array();
-	emailList = new Array();
+	idCount = 3;
+	idList = ['admin', 'test1', 'test2'];
+	pwdList = ['admin123', 'test1123', 'test2123'];
+	emailList = ['admin@naver.com', 'test1@naver.com', 'test2@naver.com'];
 	
 	window.onload = function() {
 		idObj = document.getElementsByName('id')[0];
@@ -234,6 +235,7 @@
 		}
 		return false;
 	}
+	
 	function borderColorFnc(obj, chk){
 		if(chk){
 			obj.style.borderColor = "#DDDDDD";
@@ -248,13 +250,42 @@
 		var pwdChk = pwdChkFnc();
 		var pwdRepeatChk = pwdRepeatChkFnc();
 		var emailChk = emailChkFnc();
+		var locStr = "";
 		
 		if(idChk && messageChk && pwdChk && pwdRepeatChk && emailChk){
 			idList[idCount] = idObj.value;
 			pwdList[idCount] = pwdObj.value;
 			emailList[idCount++] = emailObj.value;
-			alert('가입완료');
+			var dataStr = ''
+			dataStr += dataToString(idList, 'id');
+			dataStr += dataToString(pwdList, 'pwd');
+			dataStr += dataToString(emailList, 'email');
+			locStr += './login_1.jsp?';
+			locStr += dataStr;
+			location.href = locStr;
 		}
+	}
+	
+	function dataToString(data, dataName){
+		var str = dataName + '=';
+		for (var i = 0; i < data.length; i++) {
+			str += ((i == 0) ? '' : ',') + data[i];
+		}
+		str += '&';
+		return str;
+	}
+	
+	function stringToData(str){
+		str = str.substring(str.indexOf('?') + 1);
+		var rawData = str.split('&');
+		var data = new Array();
+		
+		for (var i = 0; i < rawData.length; i++) {
+			rawData[i] = rawData[i].substring(rawData.indexOf('='));
+			data[i] = rawData.split(',');
+		}
+		
+		return data;
 	}
 </script>
 
