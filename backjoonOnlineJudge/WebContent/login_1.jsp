@@ -246,8 +246,8 @@
 				pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
 				pTag.setAttribute('style', 'color : red');
 				
+				inputTag[0].value = '';
 				inputTag[1].value = '';
-				inputTag[2].value = '';
 			}
 		}
 			
