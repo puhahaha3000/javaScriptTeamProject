@@ -261,7 +261,7 @@
 		
 		for (var i = 0; i < tblCnt.length; i++) {
 			tblData[i] = [tblCnt[i], tblEmail[i], tblSubject[i],
-					   tblYN[i], tblContents[i], tblWriter[i]];
+					   tblYN[i], tblContents[i].substring(0, 10), tblWriter[i]];
 		}
 		
 		createTableFnc(tblData);
@@ -305,6 +305,14 @@
 			tblYN = tblDefault[3];
 			tblContents = tblDefault[4];
 			tblWriter = tblDefault[5];
+			
+			dataList[3] = ['tblCnt'].concat(tblCnt);
+			dataList[4] = ['tblEmail'].concat(tblEmail);
+			dataList[5] = ['tblSubject'].concat(tblSubject);
+			dataList[6] = ['tblYN'].concat(tblYN);
+			dataList[7] = ['tblContents'].concat(tblContents);
+			dataList[8] = ['tblWriter'].concat(tblWriter);
+			
 		} else{
 			tblCnt = tblCnt.concat(dataToArray(dataList, 'tblCnt'));
 			tblEmail = tblEmail.concat(dataToArray(dataList, 'tblEmail'));

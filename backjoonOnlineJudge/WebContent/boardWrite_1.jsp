@@ -126,27 +126,39 @@
 	
 	function sendInfo() {
 		
-		cnt = parseInt(dataList[3][dataList[3].length - 1]) + 1;
 		email = document.getElementById('emailV').value;
 		subject = document.getElementById('subjectV').value;
 		contents = document.getElementById('contentsV').value;
 		writer = document.getElementById('idV').value;
 		pwdValue = document.getElementById('pwdV').value;
 
-		dataList[3] = dataList[3].concat([cnt]);
-		dataList[4] = dataList[4].concat([email]);
-		dataList[5] = dataList[5].concat([subject]);
-		dataList[6] = dataList[6].concat(['Y']);
-		dataList[7] = dataList[7].concat([contents]);
-		dataList[8] = dataList[8].concat([writer]);
-		
-		if (emailValue.value == email && pwdValue == pwd) {
+		if(checkFnc()){
+			cnt = parseInt(dataList[3][dataList[3].length - 1]) + 1;
+	
+			dataList[3] = dataList[3].concat([cnt]);
+			dataList[4] = dataList[4].concat([email]);
+			dataList[5] = dataList[5].concat([subject]);
+			dataList[6] = dataList[6].concat(['Y']);
+			dataList[7] = dataList[7].concat([contents]);
+			dataList[8] = dataList[8].concat([writer]);
+			
 			var infoSend = './board_1.jsp';
 			infoSend += dataToString(dataList);
 			
 			location.href = infoSend;
+		}
+		
+		
+	}
+	
+	function checkFnc() {
+		
+		if (emailValue.value == email && pwdValue == pwd) {
+
+			return true;
 		}else {
 			alert('이메일, 비밀번호가 다릅니다.');
+			return false;
 		}
 	}
 	
