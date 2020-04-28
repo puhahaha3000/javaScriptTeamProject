@@ -90,6 +90,10 @@
 </style>
 	
 <script type="text/javascript">
+	
+	function notFnc() {
+		mainDataFnc();
+	}
 
 	function findBtnFnc() {
 // 		옵션 value
@@ -263,6 +267,14 @@
 		createTableFnc(tblData);
 	}
 	
+	function logoutFnc(){
+		var logOut = confirm('로그아웃 하시겠습니까?');
+		
+		if(logOut == true) {
+			location.href = './index.jsp'; 
+		}
+	}
+	
 	window.onload = function() {
 		
 // 		<넘어온 값
@@ -327,12 +339,14 @@
 		<a href="./index.jsp" style="text-decoration: none">
 			<img id="navLogo" src="./image/logo.png" style="vertical-align: bottom;">
 		</a>
-		<input class="navBtn" type="button" value="게시판">
+		<input onclick='notFnc();' class="navBtn" type="button" value="게시판">
 	</div>
 	
 	<div id="midDiv">
 		<div id='headerDiv'>
 			List Sample
+			<input onclick='logoutFnc();' class='btnSet'
+				style='float: right;' type='button' value='로그아웃'>
 		</div>
 		<hr>
 		<div id='firstLine'>

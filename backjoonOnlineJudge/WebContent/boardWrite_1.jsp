@@ -118,6 +118,12 @@
 		return result;
 	}
 	
+	function gogoFnc() {
+		goBoard = decodeURIComponent(location.href).replace('boardWrite_1.jsp','board_1.jsp');
+		
+		location.href = goBoard;
+	}
+	
 	function sendInfo() {
 		
 		cnt = parseInt(dataList[3][dataList[3].length - 1]) + 1;
@@ -169,7 +175,7 @@
 		<a href="./index.jsp" style="text-decoration: none">
 			<img id="navLogo" src="./image/logo.png" style="vertical-align: bottom;">
 		</a>
-		<input class="navBtn" type="button" value="게시판">
+		<input onclick='gogoFnc();' class="navBtn" type="button" value="게시판">
 	</div>
 	
 	<div id="midDiv">
@@ -223,8 +229,8 @@
 						<td colspan="2" class='textCenter'>
 							<input id='saveBtn' type='button' value='Save' onclick='sendInfo();'>
 							<input type='reset' value='Reset'>
-							<a href='./login_1.jsp' class='aTagBtn'>
-								<input type='button' value='Go to Main'></a>
+							<a class='aTagBtn'>
+								<input onclick='gogoFnc();' type='button' value='Go to Main'></a>
 						</td>
 					</tr>
 				</table>
