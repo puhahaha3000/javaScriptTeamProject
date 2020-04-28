@@ -161,7 +161,7 @@
 	
 	window.onload = function() {
 		
-		var tag = document.getElementsByTagName('input')[3];
+		var tag = document.getElementById('loginBtn');
 		
 		tag.addEventListener('click', checkFnc, false);
 		
@@ -179,15 +179,15 @@
 		
 		var inputTag = document.getElementsByTagName('input');
 		
-		var idValue = inputTag[1].value;
+		var idValue = inputTag[0].value;
 		
-		var pwdValue = inputTag[2].value;
+		var pwdValue = inputTag[1].value;
 		
 		//0 : ID, 1 : pwd, 2 : email
 		var data = stringToData(decodeURIComponent(location.href));
-		var idList = data[0];
-		var pwdList = data[1];
-		var emailList = data[2];
+		var idList = dataToArray(data, 'id');
+		var pwdList = dataToArray(data, 'pwd');
+		var emailList = dataToArray(data, 'email');
 		
 		var idChk = true;
 		if(idValue.indexOf('@') == -1){
@@ -210,7 +210,6 @@
 						pTag.setAttribute('style', 'color : red');
 						
 						inputTag[1].value = '';
-						inputTag[2].value = '';
 					}
 				}
 			}
@@ -234,7 +233,6 @@
 						pTag.setAttribute('style', 'color : red');
 						
 						inputTag[1].value = '';
-						inputTag[2].value = '';
 					}
 				}				
 			}
@@ -253,41 +251,81 @@
 			}
 		}
 			
+	}
 		
 			
-// 		if (idValue.length >= 3 && pwdValue.length >= 6) {
-// 			location = "./board_1.jsp";
-// 		}else{
-// 			var pTag = document.getElementById('mistake');
-// 			pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
-// 			pTag.setAttribute('style', 'color : red');
-			
-// 			inputTag[1].value = '';
-// 			inputTag[2].value = '';
+	   function dataToString(data){
+		      
+		      var str = '?';
+		      
+		      for (var i = 0; i < data.length; i++) {
+		         str += data[i][0] + '=';
+		         for (var j = 1; j < data[i].length; j++) {
+		            str += ((j == 1) ? '' : ',') + data[i][j];
+		         }
+		         str += '&';
+		      }
+		      
+		      str = str.substring(0, str.length - 1);
+		      return str;
+		}
+		   
+		function stringToData(str){
+			  str = decodeURIComponent(str);
+		      if(str.indexOf('?') == -1){
+		         
+		      }else{
+		         str = str.substring(str.indexOf('?') + 1);
+		      }
+		      
+		      var rawData = str.split('&');
+		      var data = new Array();
+		      
+		      for (var i = 0; i < rawData.length; i++) {
+		         var idx = rawData[i].indexOf('=');
+		         dataName = new Array();
+		         dataName[0] = rawData[i].substring(0, idx); 
+		         rawData[i] = rawData[i].substring(idx + 1);
+		         data[i] = dataName.concat(rawData[i].split(','));
+		      }
+		      
+		      return data;
+		   }
+		
+		 function dataToArray(data, str){
+		      var result = new Array();
+		      for (var i = 0; i < data.length; i++) {
+		         if(str == data[i][0]){
+		            for (var j = 1; j < data[i].length; j++) {
+		               result[j - 1] = data[i][j];
+		            }
+		         }
+		      }
+		      return result;
+		   }
+	
+	
+// 	function dataToString(data, dataName){
+// 		var str = dataName + '=';
+// 		for (var i = 0; i < data.length; i++) {
+// 			str += ((i == 0) ? '' : ',') + data[i];
 // 		}
-	}
+// 		str += '&';
+// 		return str;
+// 	}
 	
-	function dataToString(data, dataName){
-		var str = dataName + '=';
-		for (var i = 0; i < data.length; i++) {
-			str += ((i == 0) ? '' : ',') + data[i];
-		}
-		str += '&';
-		return str;
-	}
-	
-	function stringToData(str){
-		str = str.substring(str.indexOf('?') + 1);
-		var rawData = str.split('&');
-		var data = new Array();
+// 	function stringToData(str){
+// 		str = str.substring(str.indexOf('?') + 1);
+// 		var rawData = str.split('&');
+// 		var data = new Array();
 		
-		for (var i = 0; i < rawData.length; i++) {
-			rawData[i] = rawData[i].substring(rawData[i].indexOf('=') +1);
-			data[i] = rawData[i].split(',');
-		}
+// 		for (var i = 0; i < rawData.length; i++) {
+// 			rawData[i] = rawData[i].substring(rawData[i].indexOf('=') +1);
+// 			data[i] = rawData[i].split(',');
+// 		}
 		
-		return data;
-	}
+// 		return data;
+// 	}
 	
 	
 	
@@ -300,9 +338,6 @@
 	<div id="topNavDiv">
 		<a href="./index.jsp" style="text-decoration: none">
 			<img id="navLogo" src="./image/logo.png" style="vertical-align: bottom;">
-		</a>
-		<a href="./board_1.jsp" style="text-decoration: none">
-			<input class="navBtn" type="button" value="게시판">
 		</a>
 	</div>
 	
