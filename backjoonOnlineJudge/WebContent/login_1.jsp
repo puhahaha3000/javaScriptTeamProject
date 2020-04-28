@@ -164,6 +164,15 @@
 		var tag = document.getElementsByTagName('input')[3];
 		
 		tag.addEventListener('click', checkFnc, false);
+		
+		var signUpBtnObj = document.getElementById('signUpBtn');
+		
+		signUpBtnObj.addEventListener('click', signUpFnc, false);
+	}
+	
+	function signUpFnc() {
+		var str = decodeURIComponent(location.href);
+		location.href = './signUp_1.jsp?' + str.substring(str.indexOf('?') + 1);
 	}
 	
 	function checkFnc() {
@@ -174,17 +183,113 @@
 		
 		var pwdValue = inputTag[2].value;
 		
-		if (idValue.length >= 3 && pwdValue.length >= 6) {
-			location = "./board_1.jsp";
-		}else{
-			var pTag = document.getElementById('mistake');
-			pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
-			pTag.setAttribute('style', 'color : red');
-			
-			inputTag[1].value = '';
-			inputTag[2].value = '';
+		//0 : ID, 1 : pwd, 2 : email
+		var data = stringToData(decodeURIComponent(location.href));
+		var idList = data[0];
+		var pwdList = data[1];
+		var emailList = data[2];
+		
+		var idChk = true;
+		if(idValue.indexOf('@') == -1){
+			//이메일이 아닌경우
+			for (var i = 0; i < idList.length; i++) {
+				if(idList[i] == idValue){
+					if(pwdList[i] == pwdValue){
+						//로그인성공
+						var infoSend = '';
+						infoSend += './board_1.jsp?';
+						infoSend += 'id=' + idList[i] + '&';
+						infoSend += 'pwd=' + pwdList[i] + '&';
+						infoSend += 'email=' + emailList[i];
+	
+						location.href = infoSend; 
+					} else{
+						//비밀번호 틀림
+						var pTag = document.getElementById('mistake');
+						pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
+						pTag.setAttribute('style', 'color : red');
+						
+						inputTag[1].value = '';
+						inputTag[2].value = '';
+					}
+				}
+			}
+		} else{
+			//이메일인 경우
+			for (var i = 0; i < emailList.length; i++) {
+				if (emailList[i] == idValue ) {
+					if (pwdList[i] == pwdValue) {
+						//로그인 성공
+						var infoSend = '';
+						infoSend += './board_1.jsp?';
+						infoSend += 'id=' + idList[i] + '&';
+						infoSend += 'pwd=' + pwdList[i] + '&';
+						infoSend += 'email=' + emailList[i];
+	
+						location.href = infoSend;
+					}else{
+						//비밀번호 틀림
+						var pTag = document.getElementById('mistake');
+						pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
+						pTag.setAttribute('style', 'color : red');
+						
+						inputTag[1].value = '';
+						inputTag[2].value = '';
+					}
+				}				
+			}
+		
 		}
+		
+		// 아이디가 없는 경우
+		for (var i = 0; i < idList.length; i++) {
+			if (idList[i] != idValue) {
+				var pTag = document.getElementById('mistake');
+				pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
+				pTag.setAttribute('style', 'color : red');
+				
+				inputTag[1].value = '';
+				inputTag[2].value = '';
+			}
+		}
+			
+		
+			
+// 		if (idValue.length >= 3 && pwdValue.length >= 6) {
+// 			location = "./board_1.jsp";
+// 		}else{
+// 			var pTag = document.getElementById('mistake');
+// 			pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
+// 			pTag.setAttribute('style', 'color : red');
+			
+// 			inputTag[1].value = '';
+// 			inputTag[2].value = '';
+// 		}
 	}
+	
+	function dataToString(data, dataName){
+		var str = dataName + '=';
+		for (var i = 0; i < data.length; i++) {
+			str += ((i == 0) ? '' : ',') + data[i];
+		}
+		str += '&';
+		return str;
+	}
+	
+	function stringToData(str){
+		str = str.substring(str.indexOf('?') + 1);
+		var rawData = str.split('&');
+		var data = new Array();
+		
+		for (var i = 0; i < rawData.length; i++) {
+			rawData[i] = rawData[i].substring(rawData[i].indexOf('=') +1);
+			data[i] = rawData[i].split(',');
+		}
+		
+		return data;
+	}
+	
+	
 	
 </script>
 
@@ -240,7 +345,7 @@
 					
 					<div style="margin-top: 30px;">
 						
-							<input id="loginBtn" type="text" value="로그인">
+							<input id="loginBtn" type="submit" value="로그인">
 					</div>
 					
 					<div id="lineSecondDiv">
@@ -249,7 +354,7 @@
 					<div id="lastDiv">
 						<div>
 							<p id="mistake"></p>
-							<p>회원 가입은, <a href="./signUp_1.jsp">여기</a>에서 할 수 있습니다.</p> 
+							<p>회원 가입은, <input id="signUpBtn" type="button" value="여기" style="background-color: white; border-style: none; color: blue;">에서 할 수 있습니다.</p> 
 						</div>
 					</div>
 				</div>
