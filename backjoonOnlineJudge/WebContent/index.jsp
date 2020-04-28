@@ -81,8 +81,8 @@
 		var data = new Array();
 		
 		for (var i = 0; i < rawData.length; i++) {
-			rawData[i] = rawData[i].substring(rawData.indexOf('='));
-			data[i] = rawData.split(',');
+			rawData[i] = rawData[i].substring(rawData[i].indexOf('=') + 1);
+			data[i] = rawData[i].split(',');
 		}
 		
 		return data;

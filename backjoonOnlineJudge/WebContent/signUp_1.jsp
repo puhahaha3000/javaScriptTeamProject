@@ -92,12 +92,16 @@
 	
 <script type="text/javascript">
 
-	idCount = 3;
-	idList = ['admin', 'test1', 'test2'];
-	pwdList = ['admin123', 'test1123', 'test2123'];
-	emailList = ['admin@naver.com', 'test1@naver.com', 'test2@naver.com'];
 	
 	window.onload = function() {
+		
+		var data = stringToData(decodeURIComponent(location.href));
+		idCount = data[0].length;
+		
+		idList = data[0];
+		pwdList = data[1];
+		emailList = data[2];
+		
 		idObj = document.getElementsByName('id')[0];
 		messageObj = document.getElementsByName('message')[0];
 		pwdObj = document.getElementsByName('pwd')[0];
@@ -281,8 +285,8 @@
 		var data = new Array();
 		
 		for (var i = 0; i < rawData.length; i++) {
-			rawData[i] = rawData[i].substring(rawData.indexOf('='));
-			data[i] = rawData.split(',');
+			rawData[i] = rawData[i].substring(rawData[i].indexOf('=') + 1);
+			data[i] = rawData[i].split(',');
 		}
 		
 		return data;
