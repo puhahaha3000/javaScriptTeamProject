@@ -64,8 +64,99 @@
 </style>
 	
 <script type="text/javascript">
+
 	
+	//	array를 url로
+	function dataToString(data){
+	   
+		var str = '?';
+		
+		for (var i = 0; i < data.length; i++) {
+			str += data[i][0] + '=';
+			for (var j = 1; j < data[i].length; j++) {
+			   str += ((j == 1) ? '' : ',') + data[i][j];
+			}
+			str += '&';
+		}
+		
+		str = str.substring(0, str.length - 1);
+		return str;
+	}
 	
+	//	url을 array로
+	function stringToData(str){
+		str = decodeURIComponent(str);
+		if(str.indexOf('?') == -1){
+		   
+		}else{
+			str = str.substring(str.indexOf('?') + 1);
+		}
+		
+		var rawData = str.split('&');
+		var data = new Array();
+		
+		for (var i = 0; i < rawData.length; i++) {
+			var idx = rawData[i].indexOf('=');
+			dataName = new Array();
+			dataName[0] = rawData[i].substring(0, idx); 
+			rawData[i] = rawData[i].substring(idx + 1);
+			data[i] = dataName.concat(rawData[i].split(','));
+		}
+		
+		return data;
+	}
+	
+	function dataToArray(data, str){
+		var result = new Array();
+		for (var i = 0; i < data.length; i++) {
+			if(str == data[i][0]){
+				for (var j = 1; j < data[i].length; j++) {
+					result[j - 1] = data[i][j];
+				}
+			}
+		}
+		return result;
+	}
+	
+	function sendInfo() {
+		
+		cnt = parseInt(dataList[3][dataList[3].length - 1]) + 1;
+		email = document.getElementById('emailV').value;
+		subject = document.getElementById('subjectV').value;
+		contents = document.getElementById('contentsV').value;
+		writer = document.getElementById('idV').value;
+		pwdValue = document.getElementById('pwdV').value;
+
+		dataList[3] = dataList[3].concat([cnt]);
+		dataList[4] = dataList[4].concat([email]);
+		dataList[5] = dataList[5].concat([subject]);
+		dataList[6] = dataList[6].concat(['Y']);
+		dataList[7] = dataList[7].concat([contents]);
+		dataList[8] = dataList[8].concat([writer]);
+		
+		if (emailValue.value == email && pwdValue == pwd) {
+			var infoSend = './board_1.jsp';
+			infoSend += dataToString(dataList);
+			
+			location.href = infoSend;
+		}else {
+			alert('이메일, 비밀번호가 다릅니다.');
+		}
+	}
+	
+	window.onload = function() {
+		dataList = stringToData(location.href);
+		
+		id = dataToArray(dataList, 'id');
+		pwd = dataToArray(dataList, 'pwd');
+		email = dataToArray(dataList, 'email');
+		
+		idValue = document.getElementById('idV');
+		emailValue = document.getElementById('emailV');
+		
+		idValue.value = id;
+		emailValue.value = email;
+	}
 
 </script>
 
@@ -93,7 +184,7 @@
 							Writer
 						</td>
 						<td>
-							<input type='text' value='' name="writer">
+							<input id='idV' type='text' value='' name="writer">
 						</td>
 					</tr>
 					<tr>
@@ -101,7 +192,7 @@
 							Subject
 						</td>
 						<td>
-							<input type='text' size='53' value='' name="subject">
+							<input id='subjectV' type='text' size='53' value='' name="subject">
 						</td>
 					</tr>
 					<tr>
@@ -109,7 +200,7 @@
 							Email
 						</td>
 						<td>
-							<input type="email" size='53' name='email'>
+							<input id='emailV' type="email" value="" size='53' name='email'>
 						</td>
 					</tr>
 					<tr>
@@ -117,7 +208,7 @@
 							Content
 						</td>
 						<td>
-							<textarea rows="20" cols="45" name='content'></textarea>
+							<textarea id='contentsV' rows="20" cols="45" name='content'></textarea>
 						</td>
 					</tr>
 					<tr>
@@ -125,14 +216,14 @@
 							Password
 						</td>
 						<td>
-							<input type='password' value=''>
+							<input id='pwdV' type='password' value=''>
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2" class='textCenter'>
-							<input id='saveBtn' type='submit' value='Save'>
+							<input id='saveBtn' type='button' value='Save' onclick='sendInfo();'>
 							<input type='reset' value='Reset'>
-							<a href='' class='aTagBtn'>
+							<a href='./login_1.jsp' class='aTagBtn'>
 								<input type='button' value='Go to Main'></a>
 						</td>
 					</tr>

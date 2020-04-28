@@ -92,145 +92,225 @@
 <script type="text/javascript">
 
 	function findBtnFnc() {
-// // 		옵션 value
-// 		var searchText = document.getElementById('selectBtn').value;
+// 		옵션 value
+		var searchText = document.getElementById('selectBtn').value;
 		
-// // 		검색란 value
-// 		var textCheck = document.getElementById('searchText').value;
+// 		검색란 value
+		var textCheck = document.getElementById('searchText').value;
 		
-// // 		검색 옵션 id로 찾을 경우
-// 		if (searchText == 'id') {
-// 			if(.indexOf(textCheck) != -1) {
-				
-// 			}
-			
-// //	 	검색 옵션 name로 찾을 경우
-// 		} else if (searchText == 'name') {
-// 			if(.indexOf(textCheck) != -1) {
-				
-// 			}
-			
-// //	 	검색 옵션 description로 찾을 경우
-// 		} else if (searchText == 'description') {
-// 			if(.indexOf(textCheck) != -1) {
-				
-// 			}
-			
-// //	 	검색 옵션 registrant로 찾을 경우
-// 		} else if (searchText == 'registrant') {
-// 			if(.indexOf(textCheck) != -1) {
-				
-// 			}
-			
-// 		}
+		searchEmail = dataToArray(dataList, 'tblEmail');
+		searchSubject = dataToArray(dataList, 'tblSubject');
+		searchContents = dataToArray(dataList, 'tblContents');
+		searchWriter = dataToArray(dataList, 'tblWriter');
+		var searchIdx = new Array();
+		var searchCnt = 0;
+		
+// 		검색 옵션 id로 찾을 경우
+		if (textCheck == '') {
+			mainDataFnc();
+		}
+
+		if (searchText == 'id') {
+			for (var i = 0; i < searchEmail.length; i++) {
+				if (searchEmail[i].indexOf(textCheck) != -1) {
+					searchIdx[searchCnt++] = i;
+				} 
+			}
+		} else if (searchText == 'name') {
+			for (var i = 0; i < searchSubject.length; i++) {
+				if (searchSubject[i].indexOf(textCheck) != -1) {
+					searchIdx[searchCnt++] = i;
+				} 
+			}
+		} else if (searchText == 'description') {
+			for (var i = 0; i < searchContents.length; i++) {
+				if (searchContents[i].indexOf(textCheck) != -1) {
+					searchIdx[searchCnt++] = i;
+				} 
+			}
+		} else if (searchText == 'registrant') {
+			for (var i = 0; i < searchWriter.length; i++) {
+				if (searchWriter[i].indexOf(textCheck) != -1) {
+					searchIdx[searchCnt++] = i;
+				}
+			}
+		}
+		
+		var tblData = new Array();
+		
+		for (var i = 0; i < searchIdx.length; i++) {
+			tblData[i] = [[tblCnt[searchIdx[i]]], [tblEmail[searchIdx[i]]],
+						  [tblSubject[searchIdx[i]]], [tblYN[searchIdx[i]]],
+						  [tblContents[searchIdx[i]]], [tblWriter[searchIdx[i]]]];
+		}
+		
+		
+		
+		createTableFnc(tblData);
+	}
+	
+	function createTableFnc(tblData) {
+// 테이블 데이터 배열 생성
+		tableTag = document.getElementsByTagName('table')[0];
+
+		tbodyTag = tableTag.getElementsByTagName('tbody')[0];
+		removeTrTag = tbodyTag.children;
+		
+		for (var i = removeTrTag.length - 1; i > 0; i--) {
+			removeTrTag[i].remove();
+		}
+		
+		tdList = new Array();
+// 		<테이블 생성
+		
+		for (var i = 0; i < tblData.length; i++) {
+			createTrTag = document.createElement('tr');
+			for (var j = 0; j < tblData[i].length; j++) {
+				createTdTag = document.createElement('td');
+				if(j != 2){
+					createTdTag.setAttribute('class', 'tableText');
+				}			
+				createTdTag.appendChild(document.createTextNode(tblData[i][j]));
+				createTrTag.appendChild(createTdTag);
+			}
+			tableTag.getElementsByTagName('tbody')[0].appendChild(createTrTag);
+		}
+		
+// 		테이블 생성 끝>
+	}
+	
+	function sendInfoFnc() {
+		
+		var sendData = new Array();
+		sendData[0] = ['id', id];
+		sendData[1] = ['pwd', pwd];
+		sendData[2] = ['email', email];
+		
+		sendData[3] = ['tblCnt'].concat(tblCnt);
+		sendData[4] = ['tblEmail'].concat(tblEmail);
+		sendData[5] = ['tblSubject'].concat(tblSubject);
+		sendData[6] = ['tblYN'].concat(tblYN);
+		sendData[7] = ['tblContents'].concat(tblContents);
+		sendData[8] = ['tblWriter'].concat(tblWriter);
+		
+		
+		var infoSend = './boardWrite_1.jsp';
+		infoSend += dataToString(sendData);
+		
+		location.href = infoSend;
+	}
+	
+// 	array를 url로
+	function dataToString(data){
+	   
+		var str = '?';
+		
+		for (var i = 0; i < data.length; i++) {
+			str += data[i][0] + '=';
+			for (var j = 1; j < data[i].length; j++) {
+			   str += ((j == 1) ? '' : ',') + data[i][j];
+			}
+			str += '&';
+		}
+		
+		str = str.substring(0, str.length - 1);
+		return str;
+	}
+	
+// 	url을 array로
+	function stringToData(str){
+		str = decodeURIComponent(str);
+		if(str.indexOf('?') == -1){
+		   
+		}else{
+			str = str.substring(str.indexOf('?') + 1);
+		}
+		
+		var rawData = str.split('&');
+		var data = new Array();
+		
+		for (var i = 0; i < rawData.length; i++) {
+			var idx = rawData[i].indexOf('=');
+			dataName = new Array();
+			dataName[0] = rawData[i].substring(0, idx); 
+			rawData[i] = rawData[i].substring(idx + 1);
+			data[i] = dataName.concat(rawData[i].split(','));
+		}
+		
+		return data;
+	}
+	
+	function dataToArray(data, str){
+		var result = new Array();
+		for (var i = 0; i < data.length; i++) {
+			if(str == data[i][0]){
+				for (var j = 1; j < data[i].length; j++) {
+					result[j - 1] = data[i][j];
+				}
+			}
+		}
+		return result;
+	}
+	
+	function mainDataFnc() {
+		var tblData = new Array();
+		
+		for (var i = 0; i < tblCnt.length; i++) {
+			tblData[i] = [tblCnt[i], tblEmail[i], tblSubject[i],
+					   tblYN[i], tblContents[i], tblWriter[i]];
+		}
+		
+		createTableFnc(tblData);
 	}
 	
 	window.onload = function() {
 		
 // 		<넘어온 값
 // 		링크 값
-		var link = decodeURIComponent(location.href).split("?");
-		var infoText = link[1].split("&");
-		var idx = 0;
-		inputData = new Array(); 
+		dataList = stringToData(location.href);
 		
-		for (var i = 0; i < infoText.length; i++) {
-			idx = infoText[i].indexOf('=');
-			inputData[i] = infoText[i].substring(idx + 1);
+		id = dataToArray(dataList, 'id');
+		pwd = dataToArray(dataList, 'pwd');
+		email = dataToArray(dataList, 'email');
+		
+		tblCnt = new Array();
+		tblEmail = new Array();
+		tblSubject = new Array();
+		tblYN = new Array();
+		tblContents = new Array();
+		tblWriter = new Array();
+		
+		if(dataList.length == 3){
+			tblDefault = [['1', '2'],
+				  ['test@test.com', 'test2@test.com'],
+				  ['제목입니다', '두번째글'],
+				  ['Y', 'Y'],
+				  ['내용은10자까지만', '보여줍니다'],
+				  ['작성자입니다', '두번째작성자']];
+			tblCnt = tblDefault[0];
+			tblEmail = tblDefault[1];
+			tblSubject = tblDefault[2];
+			tblYN = tblDefault[3];
+			tblContents = tblDefault[4];
+			tblWriter = tblDefault[5];
+		} else{
+			tblCnt = tblCnt.concat(dataToArray(dataList, 'tblCnt'));
+			tblEmail = tblEmail.concat(dataToArray(dataList, 'tblEmail'));
+			tblSubject = tblSubject.concat(dataToArray(dataList, 'tblSubject'));
+			tblYN = tblYN.concat(dataToArray(dataList, 'tblYN'));
+			tblContents = tblContents.concat(dataToArray(dataList, 'tblContents'));
+			tblWriter = tblWriter.concat(dataToArray(dataList, 'tblWriter'));
 		}
-// 		넘어온 값>
 		
-// 		for (var i = 0; i < inputData.length; i++) {
-// 			alert(inputData[i]);
-// 		}
 		
 // 		검색 버튼
 		var searchBtn = document.getElementById('findBtn');
-		var cnt = 1;
+		cnt = 1;
 		
-// 		<테이블 생성
-		var tableTag = document.getElementsByTagName('table')[0];
+		var wirtBtn = document.getElementById('testBtn');
+		wirtBtn.addEventListener('click', sendInfoFnc);
 		
-// 		td에 text 넣음
-		var cntTextNode = document.createTextNode(cnt);
-		var idTextNod = document.createTextNode(inputData[2]);
-		var nameTextNod = document.createTextNode(inputData[1]);
-		var yTextNode = document.createTextNode('Y');
-		var desTextNode = document.createTextNode(inputData[3]);
-		var writerTextNode = document.createTextNode(inputData[0]);
-		
-		createTrTag = document.createElement('tr');
-		
-// 		td 태그 배열 생성
-		var tdList = new Array();
-		
-		for (var i = 0; i < 6; i++) {
-				tdList[i] = document.createElement('td');
-				createTrTag.appendChild(tdList[i]);
-			if(i != 2) {
-				tdList[i].setAttribute('class', 'tableText')
-			}
-// 			각 값을 넣음
-			switch (i) {
-				case 0:
-					tdList[i].appendChild(cntTextNode);
-					cnt++;
-				case 1:
-					tdList[i].appendChild(idTextNod);
-				case 2:
-					tdList[i].appendChild(nameTextNod);
-				case 3:
-					tdList[i].appendChild(yTextNode);
-				case 4:
-					tdList[i].appendChild(desTextNode);
-				case 5:
-					tdList[i].appendChild(writerTextNode);
-			}	
-		}
-		
-// 		테스트 start
-		var createTrTag2 = document.createElement('tr');
-		
-		var cntTextNode2 = document.createTextNode(cnt);
-		var idTextNod2 = document.createTextNode('ddd@ddd');
-		var nameTextNod2 = document.createTextNode('abcabc');
-		var yTextNode2 = document.createTextNode('Y');
-		var desTextNode2 = document.createTextNode('글을 쓰는 곳입니다');
-		var writerTextNode2 = document.createTextNode('글쓴이');
-		
-		var createTrTag2 = document.createElement('tr');
-		
-// 		td 태그 배열 생성
-		tdList2 = new Array();
-		
-		for (var i = 0; i < 6; i++) {
-				tdList2[i] = document.createElement('td');
-				createTrTag2.appendChild(tdList2[i]);
-			if(i != 2) {
-				tdList2[i].setAttribute('class', 'tableText')
-			}
-// 			각 값을 넣음
-			switch (i) {
-				case 0:
-					tdList2[i].appendChild(cntTextNode2);
-					cnt++;
-				case 1:
-					tdList2[i].appendChild(idTextNod2);
-				case 2:
-					tdList2[i].appendChild(nameTextNod2);
-				case 3:
-					tdList2[i].appendChild(yTextNode2);
-				case 4:
-					tdList2[i].appendChild(desTextNode2);
-				case 5:
-					tdList2[i].appendChild(writerTextNode2);
-			}	
-		}
-// 		테스트 end
-		
-		tableTag.getElementsByTagName('tbody')[0].appendChild(createTrTag);
-		tableTag.getElementsByTagName('tbody')[0].appendChild(createTrTag2);
-// 		테이블 생성 끝>
+		mainDataFnc();
 		
 // 		검색 버튼 클릭시 이벤트 발생
 		searchBtn.addEventListener('click', findBtnFnc);
@@ -293,8 +373,7 @@
 			<input id='numBtn' type='button' value='1'>
 		</div>
 		<div>
-			<a href='./boardWrite_1.jsp'>
-				<input class='btnSet' type='button' value='등록'>	</a>
+			<input id='testBtn' class='btnSet' type='button' value='등록'>
 		</div>
 	</div>
 </body>
