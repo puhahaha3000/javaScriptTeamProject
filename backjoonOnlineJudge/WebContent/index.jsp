@@ -51,41 +51,72 @@
 	window.onload = function(){
 		
 		idCount = 3;
-		idList = ['admin', 'test1', 'test2'];
-		pwdList = ['admin123', 'test1123', 'test2123'];
-		emailList = ['admin@naver.com', 'test1@naver.com', 'test2@naver.com'];
+		idList = ['id', 'admin', 'test1', 'test2'];
+		pwdList = ['pwd', 'admin123', 'test1123', 'test2123'];
+		emailList = ['email', 'admin@naver.com', 'test1@naver.com', 'test2@naver.com'];
 		
-		var dataStr = '';
-		dataStr += dataToString(idList, 'id');
-		dataStr += dataToString(pwdList, 'pwd');
-		dataStr += dataToString(emailList, 'email');
-
+		idInfoData = new Array();
+		
+		idInfoData[0] = idList;
+		idInfoData[1] = pwdList;
+		idInfoData[2] = emailList;
+		
+		var dataStr = dataToString(idInfoData);
+		
 		var locStr = '';
-		locStr += './login_1.jsp?';
+		locStr += './login_1.jsp';
 		locStr += dataStr;
 		location.href = locStr;
 	}
 	
-	function dataToString(data, dataName){
-		var str = dataName + '=';
+	function dataToString(data){
+		
+		var str = '?';
+		
 		for (var i = 0; i < data.length; i++) {
-			str += ((i == 0) ? '' : ',') + data[i];
+			str += data[i][0] + '=';
+			for (var j = 1; j < data[i].length; j++) {
+				str += ((j == 1) ? '' : ',') + data[i][j];
+			}
+			str += '&';
 		}
-		str += '&';
+		
+		str = str.substring(0, str.length - 1);
 		return str;
 	}
 	
 	function stringToData(str){
-		str = str.substring(str.indexOf('?') + 1);
+		str = decodeURIComponent(str);
+		if(str.indexOf('?') == -1){
+			
+		}else{
+			str = str.substring(str.indexOf('?') + 1);
+		}
+		
 		var rawData = str.split('&');
 		var data = new Array();
 		
 		for (var i = 0; i < rawData.length; i++) {
-			rawData[i] = rawData[i].substring(rawData[i].indexOf('=') + 1);
-			data[i] = rawData[i].split(',');
+			var idx = rawData[i].indexOf('=');
+			dataName = new Array();
+			dataName[0] = rawData[i].substring(0, idx); 
+			rawData[i] = rawData[i].substring(idx + 1);
+			data[i] = dataName.concat(rawData[i].split(','));
 		}
 		
 		return data;
+	}
+	
+	function dataToArray(data, str){
+		var result = new Array();
+		for (var i = 0; i < data.length; i++) {
+			if(str == data[i][0]){
+				for (var j = 1; j < data[i].length; j++) {
+					result[j - 1] = data[i][j];
+				}
+			}
+		}
+		return result;
 	}
 </script>
 
@@ -98,9 +129,9 @@
 		<a href="./index.jsp" style="text-decoration: none">
 			<img id="navLogo" src="./image/logo.png" style="vertical-align: bottom;">
 		</a>
-		<a href="./board_1.jsp">
-			<input class="navBtn" type="button" value="게시판">
-		</a>
+<!-- 		<a href="./board_1.jsp"> -->
+<!-- 			<input class="navBtn" type="button" value="게시판"> -->
+<!-- 		</a> -->
 	</div>
 	
 	<div id="midTitleBar">

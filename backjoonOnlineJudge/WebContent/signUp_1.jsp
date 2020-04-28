@@ -96,11 +96,11 @@
 	window.onload = function() {
 		
 		var data = stringToData(decodeURIComponent(location.href));
-		idCount = data[0].length;
 		
-		idList = data[0];
-		pwdList = data[1];
-		emailList = data[2];
+		idList = dataToArray(data, 'id');
+		pwdList = dataToArray(data, 'pwd');
+		emailList = dataToArray(data, 'email');
+		idCount = idList.length;
 		
 		idObj = document.getElementsByName('id')[0];
 		messageObj = document.getElementsByName('message')[0];
@@ -109,13 +109,15 @@
 		schoolOrOfficeObj = document.getElementsByName('schoolOrOffice')[0];
 		emailObj = document.getElementsByName('email')[0];
 		submitObj = document.getElementById('submitBtn');
-		
+		loginObj = document.getElementById('loginBtn'); 
+			
 		idObj.addEventListener('change', idChkFnc);
 		messageObj.addEventListener('change', messageChkFnc);
 		pwdObj.addEventListener('change', pwdChkFnc);
 		pwdRepeatObj.addEventListener('change', pwdRepeatChkFnc);
 		emailObj.addEventListener('change', emailChkFnc);
 		submitObj.addEventListener('click', finalChkFnc);
+		loginObj.addEventListener('click', loginLinkFnc);
 	}
 
 	function idChkFnc(){
@@ -255,41 +257,86 @@
 		var pwdRepeatChk = pwdRepeatChkFnc();
 		var emailChk = emailChkFnc();
 		var locStr = "";
+		var data = new Array();
 		
 		if(idChk && messageChk && pwdChk && pwdRepeatChk && emailChk){
 			idList[idCount] = idObj.value;
 			pwdList[idCount] = pwdObj.value;
 			emailList[idCount++] = emailObj.value;
-			var dataStr = ''
-			dataStr += dataToString(idList, 'id');
-			dataStr += dataToString(pwdList, 'pwd');
-			dataStr += dataToString(emailList, 'email');
-			locStr += './login_1.jsp?';
-			locStr += dataStr;
+
+			alert('회원가입을 축하합니다');
+			
+			data[0] = ['id'].concat(idList);
+			data[1] = ['pwd'].concat(pwdList);
+			data[2] = ['email'].concat(emailList);
+			
+			locStr += './login_1.jsp';
+			locStr += dataToString(data);
 			location.href = locStr;
 		}
 	}
 	
-	function dataToString(data, dataName){
-		var str = dataName + '=';
+	function loginLinkFnc(){
+		var data = new Array();
+		var locStr = '';
+		
+		data[0] = ['id'].concat(idList);
+		data[1] = ['pwd'].concat(pwdList);
+		data[2] = ['email'].concat(emailList);
+		
+		locStr += './login_1.jsp';
+		locStr += dataToString(data);
+		location.href = locStr;
+	}
+	
+	function dataToString(data){
+		
+		var str = '?';
+		
 		for (var i = 0; i < data.length; i++) {
-			str += ((i == 0) ? '' : ',') + data[i];
+			str += data[i][0] + '=';
+			for (var j = 1; j < data[i].length; j++) {
+				str += ((j == 1) ? '' : ',') + data[i][j];
+			}
+			str += '&';
 		}
-		str += '&';
+		
+		str = str.substring(0, str.length - 1);
 		return str;
 	}
 	
 	function stringToData(str){
-		str = str.substring(str.indexOf('?') + 1);
+		str = decodeURIComponent(str);
+		if(str.indexOf('?') == -1){
+			
+		}else{
+			str = str.substring(str.indexOf('?') + 1);
+		}
+		
 		var rawData = str.split('&');
 		var data = new Array();
 		
 		for (var i = 0; i < rawData.length; i++) {
-			rawData[i] = rawData[i].substring(rawData[i].indexOf('=') + 1);
-			data[i] = rawData[i].split(',');
+			var idx = rawData[i].indexOf('=');
+			dataName = new Array();
+			dataName[0] = rawData[i].substring(0, idx); 
+			rawData[i] = rawData[i].substring(idx + 1);
+			data[i] = dataName.concat(rawData[i].split(','));
 		}
 		
 		return data;
+	}
+	
+	function dataToArray(data, str){
+		var result = new Array();
+		for (var i = 0; i < data.length; i++) {
+			if(str == data[i][0]){
+				for (var j = 1; j < data[i].length; j++) {
+					result[j - 1] = data[i][j];
+				}
+			}
+		}
+		return result;
 	}
 </script>
 
@@ -302,9 +349,9 @@
 		<a href="./index.jsp" style="text-decoration: none">
 			<img id="navLogo" src="./image/logo.png" style="vertical-align: bottom;">
 		</a>
-		<a href="./board_1.jsp" style="text-decoration: none">
-			<input class="navBtn" type="button" value="게시판">
-		</a>
+<!-- 		<a href="./board_1.jsp" style="text-decoration: none"> -->
+<!-- 			<input class="navBtn" type="button" value="게시판"> -->
+<!-- 		</a> -->
 	</div>
 	
 	<div id="midTitleBar">
@@ -318,7 +365,7 @@
 			<div id="formContainer">
 				<div id="formHeader">
 					<h2 style="font-size: 18px">회원가입</h2>
-					<p>계정이 이미 있는 경우에는 <a href="./login_1.jsp">로그인</a>해주세요.</p>
+					<p>계정이 이미 있는 경우에는 <input id="loginBtn" type="button" value="로그인" style="background-color: white; border-style: none; color: blue;">해주세요.</p>
 					<p>가입을 하면 백준 온라인 저지의 이용약관, 개인정보취급방침 및 개인정보3자제공에 동의하게 됩니다.</p>
 					<p>아이디가 구글 검색에 노출되는 것을 원치않는 분은 다른 곳에서 사용하지 않는 아이디를 사용해주세요.</p>
 					<p>아이디의 구글 검색 노출은 회원가입 후 정보 수정에서 변경할 수 있습니다.</p>
