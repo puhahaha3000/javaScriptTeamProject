@@ -9,7 +9,7 @@
 <style type="text/css">
 /* 	공통부분 시작 */
 	*{
-		font-style: dotumche;
+		font-family: dotumche;
 		font-size: 14px;
 	}
 	
@@ -36,8 +36,6 @@
 		background-color: #FFFFFF;
 		border-style: none;
 	}
-/* 	공통부분 끝 */
-	
 	#midTitleBar{
 		height: 60px;
 		border-style: solid none solid none;
@@ -46,45 +44,11 @@
 		background-color: #EEEEEE;
 	}
 	
-	#formContainer{
-		width: 493px;
-		padding: 30px;
-		border: 1px solid #CCCCCC;
-		margin: auto;
-	}
+/* 	공통부분 끝 */
+	
 	
 	#formHeader{
 		text-align: center;
-	}
-	
-	#formRow{
-		padding: 0px 15px;
-	}
-	
-	#formRow p{
-		font-weight: bold;
-	}
-	
-	#inputLong{
-		width: 436px;
-		height: 20px;
-		padding: 6px 12px;
-		border: 1px solid #DDDDDD;
-	}
-	
-	#inputShort{
-		width: 195px;
-		height: 20px;
-		padding: 6px 12px;
-		border: 1px solid #DDDDDD;
-	}
-	
-	#submitBtn{
-		width: 80;
-		height: 30px;
-		color: #FFFFFF;
-		background-color: #428BCA;
-		border-color: #357EBD;
 	}
 	
 	#loginStartDiv{
@@ -154,6 +118,11 @@
 		text-align: left;
 	}
 	
+	#signUpBtn{
+		background-color: white;
+		border-style: none;
+		color: #428BCA;
+	}
 	
 </style>
 	
@@ -389,7 +358,7 @@
 					<div id="lastDiv">
 						<div>
 							<p id="mistake"></p>
-							<p>회원 가입은, <input id="signUpBtn" type="button" value="여기" style="background-color: white; border-style: none; color: blue;">에서 할 수 있습니다.</p> 
+							<p>회원 가입은, <input id="signUpBtn" type="button" value="여기">에서 할 수 있습니다.</p> 
 						</div>
 					</div>
 				</div>
