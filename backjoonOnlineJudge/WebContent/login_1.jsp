@@ -35,6 +35,7 @@
 		height: 40px;
 		background-color: #FFFFFF;
 		border-style: none;
+		cursor: pointer;
 	}
 	#midTitleBar{
 		height: 60px;
@@ -349,7 +350,7 @@
 					
 					<div style="margin-top: 30px;">
 						
-							<input id="loginBtn" type="submit" value="로그인">
+							<input id="loginBtn" type="submit" value="로그인" style="cursor: pointer;">
 					</div>
 					
 					<div id="lineSecondDiv">
@@ -358,7 +359,7 @@
 					<div id="lastDiv">
 						<div>
 							<p id="mistake"></p>
-							<p>회원 가입은, <input id="signUpBtn" type="button" value="여기">에서 할 수 있습니다.</p> 
+							<p>회원 가입은, <input id="signUpBtn" type="button" value="여기" style="cursor: pointer">에서 할 수 있습니다.</p> 
 						</div>
 					</div>
 				</div>

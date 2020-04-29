@@ -9,7 +9,7 @@
 <style type="text/css">
 /* 	공통부분 시작 */
 	*{
-		font-style: dotumche;
+		font-family: dotumche;
 		font-size: 14px;
 	}
 	
@@ -87,6 +87,7 @@
 		background-color: #428BCA;
 		border-style: none;
 		border-color: #357EBD;
+		cursor: pointer;
 	}
 </style>
 	
@@ -365,7 +366,7 @@
 			<div id="formContainer">
 				<div id="formHeader">
 					<h2 style="font-size: 18px">회원가입</h2>
-					<p>계정이 이미 있는 경우에는 <input id="loginBtn" type="button" value="로그인" style="background-color: white; border-style: none; color: blue;">해주세요.</p>
+					<p>계정이 이미 있는 경우에는 <input id="loginBtn" type="button" value="로그인" style="background-color: white; border-style: none; color: blue; cursor: pointer;">해주세요.</p>
 					<p>가입을 하면 백준 온라인 저지의 이용약관, 개인정보취급방침 및 개인정보3자제공에 동의하게 됩니다.</p>
 					<p>아이디가 구글 검색에 노출되는 것을 원치않는 분은 다른 곳에서 사용하지 않는 아이디를 사용해주세요.</p>
 					<p>아이디의 구글 검색 노출은 회원가입 후 정보 수정에서 변경할 수 있습니다.</p>

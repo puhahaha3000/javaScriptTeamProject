@@ -33,6 +33,7 @@
 		height: 40px;
 		background-color: #FFFFFF;
 		border-style: none;
+		cursor: pointer;
 	}
 	
 	#headerDiv {

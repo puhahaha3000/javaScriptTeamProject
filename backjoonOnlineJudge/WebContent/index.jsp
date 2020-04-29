@@ -9,7 +9,7 @@
 <style type="text/css">
 /* 	공통부분 시작 */
 	*{
-		font-style: dotumche;
+		font-family: dotumche;
 		font-size: 14px;
 	}
 	
@@ -42,6 +42,7 @@
 		height: 40px;
 		background-color: #FFFFFF;
 		border-style: none;
+		cursor: pointer;
 	}
 	
 	/* 	공통부분 끝 */

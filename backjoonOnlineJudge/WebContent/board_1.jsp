@@ -33,6 +33,7 @@
 		height: 40px;
 		background-color: #FFFFFF;
 		border-style: none;
+		cursor: pointer;
 	}
 	
 	hr {
@@ -85,6 +86,7 @@
 		border: 1px solid #E6E6E6;
 		border-radius: 4px;
 		padding: 3px;
+		cursor: pointer;
 	}
 	
 </style>
