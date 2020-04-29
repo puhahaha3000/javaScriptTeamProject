@@ -50,7 +50,7 @@
 	
 <script type="text/javascript">
 	window.onload = function(){
-		
+		//초기값을 지정한 후 로그인페이지로 이동한다
 		idCount = 3;
 		idList = ['id', 'admin', 'test1', 'test2'];
 		pwdList = ['pwd', 'admin123', 'test1123', 'test2123'];
