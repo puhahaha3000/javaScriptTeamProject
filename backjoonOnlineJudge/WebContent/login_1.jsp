@@ -159,7 +159,6 @@
 		var pwdList = dataToArray(data, 'pwd');
 		var emailList = dataToArray(data, 'email');
 		
-		var idChk = true;
 		if(idValue.indexOf('@') == -1){
 			//이메일이 아닌경우
 			for (var i = 0; i < idList.length; i++) {
@@ -211,7 +210,15 @@
 		
 		// 아이디가 없는 경우
 		for (var i = 0; i < idList.length; i++) {
-			if (idList[i] != idValue) {
+			
+			if (idList[i] != idValue || emailList[i] != idValue) {
+				
+				for (var i = 0; i < idList.length; i++) {
+					if(idList[i] == idValue  || emailList[i] == idValue){
+						return true;
+					}
+				}
+				
 				var pTag = document.getElementById('mistake');
 				pTag.innerHTML = '아이디 / 이메일 또는 비밀번호가 잘못되었습니다.';
 				pTag.setAttribute('style', 'color : red');
